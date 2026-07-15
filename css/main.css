@@ -1,0 +1,708 @@
+/* =========================================================
+   My Coffee House — main.css
+   Mobile-first. min-width breakpoints: 768px, 1440px
+   (matching the Tablet.jpg / Desktop.jpg mockup widths)
+========================================================= */
+
+:root {
+  --c-white: #ffffff;
+  --c-black: #000000;
+  --c-amber: #d69e3d;
+  --c-amber-dark: #966f2c;
+  --c-linen: #f3f0e9;
+
+  --font-head: 'Lato', Helvetica, Arial, sans-serif;
+  --font-copy: 'Karla', Helvetica, Arial, sans-serif;
+
+  --max-w: 1200px;
+  --side-space: 24px;
+
+  --transition-speed: 0.25s ease;
+}
+
+/* ---------------------------------------------------------------
+   Base
+--------------------------------------------------------------- */
+
+body {
+  font-family: var(--font-copy);
+  background-color: var(--c-linen);
+  color: var(--c-black);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-head);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.375rem; }
+
+p {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.frame {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--side-space);
+}
+
+.eyebrow {
+  font-family: var(--font-copy);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-amber);
+}
+
+/* adjacent sibling selector, grouped — any heading right after an eyebrow label gets matching spacing */
+.eyebrow + h1,
+.eyebrow + h2,
+.eyebrow + h3 {
+  margin-top: 10px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -200%;
+  left: 0;
+  z-index: 1000;
+  background-color: var(--c-black);
+  color: var(--c-white);
+  padding: 12px 20px;
+  transition: top var(--transition-speed);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ---------------------------------------------------------------
+   Buttons
+--------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-copy);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  border: 2px solid transparent;
+  transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.btn-fill-light {
+  background-color: var(--c-white);
+  border-color: var(--c-white);
+  color: var(--c-black);
+}
+
+.btn-fill-light:hover,
+.btn-fill-light:focus-visible {
+  background-color: var(--c-amber);
+  border-color: var(--c-amber);
+  color: var(--c-white);
+}
+
+.btn-line-light {
+  background-color: transparent;
+  border-color: var(--c-white);
+  color: var(--c-white);
+}
+
+.btn-line-light:hover,
+.btn-line-light:focus-visible {
+  background-color: var(--c-white);
+  color: var(--c-black);
+}
+
+.btn-fill-dark {
+  background-color: var(--c-black);
+  border-color: var(--c-black);
+  color: var(--c-white);
+}
+
+.btn-fill-dark:hover,
+.btn-fill-dark:focus-visible {
+  background-color: var(--c-amber-dark);
+  border-color: var(--c-amber-dark);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--c-amber);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------
+   Header / nav — native <details>/<summary> disclosure, no JS
+--------------------------------------------------------------- */
+
+.top-bar {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: 20;
+  padding-block: 20px;
+}
+
+.top-bar__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark img {
+  height: 22px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.nav-disclosure {
+  position: relative;
+  z-index: 40;
+}
+
+.nav-disclosure__trigger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  width: fit-content;
+}
+
+.nav-disclosure__trigger:focus-visible {
+  outline: 3px solid var(--c-amber);
+  outline-offset: 3px;
+}
+
+.nav-disclosure__trigger span {
+  width: 24px;
+  height: 2px;
+  background-color: var(--c-white);
+  transition: transform var(--transition-speed), opacity var(--transition-speed);
+}
+
+/* attribute selector — the hamburger lines morph into an X once the disclosure is open */
+.nav-disclosure[open] .nav-disclosure__trigger span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-disclosure[open] .nav-disclosure__trigger span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-disclosure[open] .nav-disclosure__trigger span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-list-wrap {
+  display: block;
+  position: fixed;
+  inset: 0 0 0 30%;
+  background-color: var(--c-black);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform var(--transition-speed), visibility 0s linear var(--transition-speed);
+}
+
+/* general sibling combinator — the panel slides into view while the disclosure is open, without living inside it */
+.nav-disclosure[open] ~ .nav-list-wrap {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform var(--transition-speed);
+}
+
+/* child combinator — spacing applies to direct nav items only */
+.nav-list > li {
+  padding: 100px 32px 0;
+}
+
+.nav-list > li + li {
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin-inline: 32px;
+  padding-inline: 0;
+}
+
+.nav-list > li:first-child {
+  padding-top: 100px;
+}
+
+.nav-list a {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-white);
+  transition: color var(--transition-speed);
+}
+
+/* attribute selector — the current-page link is always shown in the brand accent */
+.nav-list a:hover,
+.nav-list a:focus-visible,
+.nav-list a[aria-current="page"] {
+  color: var(--c-amber);
+}
+
+/* ---------------------------------------------------------------
+   Intro banner (hero)
+--------------------------------------------------------------- */
+
+.intro-banner {
+  position: relative;
+  min-height: clamp(480px, 82vh, 640px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: var(--c-white);
+}
+
+.intro-banner__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.intro-banner__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.intro-banner__copy {
+  position: relative;
+  max-width: 800px;
+  margin-inline: auto;
+  text-align: center;
+  padding-block: 56px;
+  animation: fade-rise 0.9s ease both;
+}
+
+.intro-banner__copy p {
+  max-width: 560px;
+  margin-inline: auto;
+  margin-block: 16px 28px;
+}
+
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------------------------------------------------------------
+   Gallery
+--------------------------------------------------------------- */
+
+.gallery {
+  padding-block: 64px;
+}
+
+.gallery h2 {
+  max-width: 480px;
+  margin-bottom: 32px;
+}
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.gallery__grid li {
+  overflow: hidden;
+}
+
+.gallery__grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  transition: transform 0.4s ease;
+}
+
+.gallery__grid li:hover img {
+  transform: scale(1.08);
+}
+
+/* pseudo-class selector — the first photo becomes the full-width feature shot */
+.gallery__grid li:first-child {
+  grid-column: 1 / -1;
+}
+
+.gallery__grid li:first-child img {
+  aspect-ratio: 4 / 3;
+}
+
+/* ---------------------------------------------------------------
+   Highlights (why visit us)
+--------------------------------------------------------------- */
+
+.highlights {
+  padding-block: 64px;
+}
+
+.highlights__lead {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.highlights__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  text-align: center;
+}
+
+.highlights__grid img {
+  width: 72px;
+  height: 72px;
+  margin-inline: auto;
+  margin-bottom: 20px;
+}
+
+.highlights__grid h3 {
+  margin-bottom: 12px;
+}
+
+.highlights__grid p {
+  max-width: 320px;
+  margin-inline: auto;
+  color: #4a4a4a;
+}
+
+/* ---------------------------------------------------------------
+   Split promo (menu / locations) — one shared background image
+--------------------------------------------------------------- */
+
+.split-promo {
+  position: relative;
+  color: var(--c-white);
+  overflow: hidden;
+}
+
+.split-promo__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.split-promo__veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.split-promo__row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-block: 64px;
+}
+
+.split-promo__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.split-promo__panel h2 {
+  margin-block: 12px 24px;
+  max-width: 320px;
+}
+
+/* ---------------------------------------------------------------
+   About story
+--------------------------------------------------------------- */
+
+.about-story {
+  padding-block: 64px;
+}
+
+.about-story__media {
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.about-story__row img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin-bottom: 0;
+  transition: transform 0.4s ease;
+}
+
+.about-story__media:hover img {
+  transform: scale(1.08);
+}
+
+.about-story__copy p {
+  color: #4a4a4a;
+  margin-block: 16px 24px;
+}
+
+/* ---------------------------------------------------------------
+   Voices (testimonials)
+--------------------------------------------------------------- */
+
+.voices {
+  background-color: var(--c-black);
+  color: var(--c-white);
+  padding-block: 64px;
+}
+
+.voices h2 {
+  max-width: 420px;
+  margin-bottom: 40px;
+}
+
+.voices__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.voices__grid figure {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  margin: 0;
+}
+
+.voices__grid img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.voices__grid figure:hover img {
+  transform: scale(1.08);
+}
+
+.voices__grid figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 24px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0));
+}
+
+.voices__grid figcaption p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.voices__name {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-amber);
+  margin-bottom: 0;
+}
+
+/* pseudo-class selector — the middle testimonial's name uses the deeper amber for variety */
+.voices__grid li:nth-child(2) .voices__name {
+  color: var(--c-amber-dark);
+}
+
+/* ---------------------------------------------------------------
+   Footer
+--------------------------------------------------------------- */
+
+.site-footer-bar {
+  background-color: var(--c-black);
+  color: var(--c-white);
+  text-align: center;
+  padding-block: 24px;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* =========================================================
+   Tablet — min-width 768px
+========================================================= */
+
+@media (min-width: 768px) {
+
+  :root {
+    --side-space: 40px;
+  }
+
+  h1 { font-size: 3rem; }
+  h2 { font-size: 2.375rem; }
+  h3 { font-size: 1.75rem; }
+
+  .nav-disclosure__trigger {
+    display: none;
+  }
+
+  .nav-disclosure {
+    display: none;
+  }
+
+  .nav-list-wrap {
+    position: static;
+    background: none;
+    transform: none;
+    inset: auto;
+    visibility: visible;
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .nav-list a {
+    white-space: nowrap;
+  }
+
+  .wordmark,
+  .nav-list-wrap {
+    flex-shrink: 0;
+  }
+
+  .nav-list > li,
+  .nav-list > li:first-child {
+    padding: 0;
+  }
+
+  .nav-list > li + li {
+    padding-top: 0;
+    border-top: none;
+    margin-inline: 0;
+  }
+
+  .intro-banner__copy p {
+    font-size: 1.05rem;
+  }
+
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .highlights__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* pseudo-class selector — the odd highlight out is centered on the two-column tablet row */
+  .highlights__grid li:last-child {
+    grid-column: 1 / -1;
+    max-width: 380px;
+    margin-inline: auto;
+  }
+
+  .split-promo__row {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .about-story__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .about-story__media {
+    margin-bottom: 0;
+    height: 100%;
+  }
+
+  .about-story__row img {
+    height: 100%;
+  }
+
+  .voices__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* pseudo-class selector — the third testimonial centers itself on its own tablet row */
+  .voices__grid li:last-child {
+    grid-column: 1 / -1;
+    width: calc(50% - 12px);
+    margin-inline: auto;
+  }
+}
+
+/* =========================================================
+   Desktop — min-width 1440px
+========================================================= */
+
+@media (min-width: 1440px) {
+
+  h1 { font-size: 3.875rem; }
+  h2 { font-size: 3rem; }
+  h3 { font-size: 2rem; }
+
+  .top-bar {
+    padding-block: 32px;
+  }
+
+  .gallery__grid {
+    grid-template-columns: 1.3fr 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  .gallery__grid li:first-child {
+    grid-column: 1;
+    grid-row: 1 / 3;
+  }
+
+  .gallery__grid li:first-child img {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+
+  .highlights__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .highlights__grid li:last-child {
+    grid-column: auto;
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  .about-story__row {
+    gap: 80px;
+  }
+
+  .voices__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .voices__grid li:last-child {
+    grid-column: auto;
+    width: auto;
+    margin-inline: 0;
+  }
+}
