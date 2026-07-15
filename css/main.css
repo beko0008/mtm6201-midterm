@@ -1,8 +1,4 @@
-/* =========================================================
-   My Coffee House — main.css
-   Mobile-first. min-width breakpoints: 768px, 1440px
-   (matching the Tablet.jpg / Desktop.jpg mockup widths)
-========================================================= */
+
 
 :root {
   --c-white: #ffffff;
@@ -20,9 +16,7 @@
   --transition-speed: 0.25s ease;
 }
 
-/* ---------------------------------------------------------------
-   Base
---------------------------------------------------------------- */
+/*    Base  */
 
 body {
   font-family: var(--font-copy);
@@ -83,9 +77,7 @@ p {
   top: 0;
 }
 
-/* ---------------------------------------------------------------
-   Buttons
---------------------------------------------------------------- */
+/*    Buttons  */
 
 .btn {
   display: inline-block;
@@ -141,9 +133,7 @@ p {
   outline-offset: 3px;
 }
 
-/* ---------------------------------------------------------------
-   Header / nav — native <details>/<summary> disclosure, no JS
---------------------------------------------------------------- */
+/*    Header / nav — native <details>/<summary> disclosure, no JS  */
 
 .top-bar {
   position: absolute;
@@ -254,9 +244,7 @@ p {
   color: var(--c-amber);
 }
 
-/* ---------------------------------------------------------------
-   Intro banner (hero)
---------------------------------------------------------------- */
+/*    Intro banner (hero)  */
 
 .intro-banner {
   position: relative;
@@ -308,9 +296,7 @@ p {
   }
 }
 
-/* ---------------------------------------------------------------
-   Gallery
---------------------------------------------------------------- */
+/*    Gallery  */
 
 .gallery {
   padding-block: 64px;
@@ -352,9 +338,7 @@ p {
   aspect-ratio: 4 / 3;
 }
 
-/* ---------------------------------------------------------------
-   Highlights (why visit us)
---------------------------------------------------------------- */
+/*    Highlights (why visit us)  */
 
 .highlights {
   padding-block: 64px;
@@ -389,9 +373,7 @@ p {
   color: #4a4a4a;
 }
 
-/* ---------------------------------------------------------------
-   Split promo (menu / locations) — one shared background image
---------------------------------------------------------------- */
+/*    Split promo (menu / locations) — one shared background image  */
 
 .split-promo {
   position: relative;
@@ -432,9 +414,7 @@ p {
   max-width: 320px;
 }
 
-/* ---------------------------------------------------------------
-   About story
---------------------------------------------------------------- */
+/*    About story  */
 
 .about-story {
   padding-block: 64px;
@@ -462,9 +442,7 @@ p {
   margin-block: 16px 24px;
 }
 
-/* ---------------------------------------------------------------
-   Voices (testimonials)
---------------------------------------------------------------- */
+/*    Voices (testimonials)  */
 
 .voices {
   background-color: var(--c-black);
@@ -531,9 +509,7 @@ p {
   color: var(--c-amber-dark);
 }
 
-/* ---------------------------------------------------------------
-   Footer
---------------------------------------------------------------- */
+/*    Footer  */
 
 .site-footer-bar {
   background-color: var(--c-black);
@@ -653,9 +629,6 @@ p {
   }
 }
 
-/* =========================================================
-   Desktop — min-width 1440px
-========================================================= */
 
 @media (min-width: 1440px) {
 
